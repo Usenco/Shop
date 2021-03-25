@@ -263,6 +263,7 @@ ul{
     #filter
     {
       z-index: 1000;
+      padding-bottom:120px !important;
     }
 
     @media(max-width:991px)

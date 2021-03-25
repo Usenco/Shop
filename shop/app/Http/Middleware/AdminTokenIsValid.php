@@ -20,10 +20,9 @@ class AdminTokenIsValid
     public function handle($request, Closure $next)
     {
         $guard = new AdminGuard(new AdminProvider( new \App\Admin() ));
-        if($guard->validate($request->data))
+        if($guard->validate(["api_token"=>$request->api_token]))
         {
             Auth::setUser($guard->user());
-            //$request->userId = $guard->user()->id;
             return $next($request);
         }
         return null;

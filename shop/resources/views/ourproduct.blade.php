@@ -187,6 +187,18 @@
       	    height:7550px;
         }
       }
+
+      #curtains
+      {
+        width:100%;
+        height:100%;
+        position:fixed;
+        top:0;
+        display: none;
+        z-index: 999;
+        background-color: black;
+        opacity: 0.2;
+      }
     </style>
 
 <div id="curtains"></div>
@@ -260,12 +272,13 @@
           </div>
         </div>
 
-        <h4 class="shop-price-title">Number Of Whole</h4>
-        <input type="number">
+        <div>
+          <h4 class="shop-price-title">Number Of Whole</h4>
+          <input type="number" style="margin-top:10px">
 
 
-        <input type="button" id = "filter_btn" name = "filter" value="Filter"/>
-
+          <input type="button" id = "filter_btn" name = "filter" value="Filter" style="margin-top:10px"/>
+        </div>
       </div>
     </div>
     <!-- shop-filter start -->
@@ -410,6 +423,13 @@
           $( "#amount_end" ).val($( "#slider-range" ).slider( "values", 1 ) );
         });	
       
+        /*--------------
+        curtains click
+        ---------------*/
+        $("#curtains").on("click",function(){
+          $('#filter').hide(1000);
+          $(this).hide();
+        });
         // делаете переменную в начале кода
           let isMobile = false;
           let isready = false;
@@ -436,14 +456,13 @@
             })	
             isready = true;
 
-            $("#curtains").css({"width":"100%","height":"100%","position":"absolute"});
-
             $('#filter').hide();
             $('#mb_filter').show();
       
             $('#close').on("click",function()
             {
               $('#filter').hide(1000);
+              $("#curtains").hide();
             })
       
             $('#amount').css({"display":"block","width":"100%"});
@@ -463,6 +482,7 @@
             $('#sm_filter').on("click",function()
             {
               $('#filter').toggle(1000);
+              $("#curtains").show();
             })
               }
               // или для остальных

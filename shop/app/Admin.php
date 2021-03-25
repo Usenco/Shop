@@ -8,6 +8,10 @@ use Illuminate\Contracts\Auth\Authenticatable;
 
 class Admin extends Model implements Authenticatable
 {
+    protected $hidden = [
+        'password', 'updated_at', 'created_at'
+    ];
+
     public function generateToken()
     {
         $this->api_token = Str::random(80);

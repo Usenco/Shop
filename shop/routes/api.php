@@ -38,5 +38,10 @@ Route::middleware('auth:api')->post('boughts','BuyController@apiboughts');
 //Route::post('login', '\App\Http\Controllers\Auth\LoginController@login');
 
 //Route::middleware('auth:admin')->post('admin', 'CategoryController@get_product_with_characteristic');
-Route::post('adminlogin','Auth\AdminController@login');
-Route::middleware('admin')->post('adminlogout','Auth\AdminController@logout');
+Route::post('/admin/login/','Auth\AdminController@login');
+Route::middleware('admin')->post('admin/logout','Auth\AdminController@logout');
+
+Route::middleware('admin')->get('admin/banners','Admin_apiController@get_banners');
+Route::middleware('admin')->post('admin/banners','Admin_apiController@story_banners');
+Route::middleware('admin')->put('admin/banners','Admin_apiController@update_banners');
+Route::middleware('admin')->delete('admin/banners','Admin_apiController@delete_banners');

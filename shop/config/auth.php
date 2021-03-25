@@ -113,7 +113,7 @@ return [
         ],
         'admins' => [
             'provider' => 'asdmins',
-            'table' => 'api_token',
+            'table' => 'admins.api_token',
             'expire' => 60,
             'throttle' => 60,
         ]

@@ -38,8 +38,4 @@ class HomeController extends Controller
     {
         return view("profile", parent::data_site() );
     }
-    public function test()
-    {
-        return "Hello world";
-    }
 }

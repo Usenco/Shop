@@ -36,6 +36,8 @@ class AdminController extends Controller
         if( !is_null(Auth::user()) ){
             Auth::user()->api_token = null;
             Auth::user()->save();
+            return true;
         }
+        return false;
     }
 }
