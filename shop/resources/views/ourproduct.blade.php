@@ -200,7 +200,8 @@
         opacity: 0.2;
       }
     </style>
-
+<div style="text-align:center;">
+<div style="max-width:2000px">
 <div id="curtains"></div>
 
 
@@ -276,6 +277,44 @@
           <h4 class="shop-price-title">Number Of Whole</h4>
           <input type="number" style="margin-top:10px">
 
+          <br>
+          <?$id=0?>
+          @foreach ($characteristic->get_characteristics as $item)
+          <details class="settings" id="{{$item['id']}}">
+            <summary style="outline:none;user-selected:none">
+              <h5>{{$item['description']}}</h5>
+            </summary>
+                <div>
+                  <div class="filter-menu">
+                    <ul>
+                      <?
+                      $values = array();
+                      foreach($item->get_values()->get() as $tmp)
+                      {
+                        $values[] = $tmp->value;
+                      }
+                      $values = array_unique($values);
+                      ?>
+                      @foreach ($values as $value)
+                        <?++$id?>  
+                        <li class="setting">
+                      
+                          <input 
+                            style = "margin-right:10px;margin-left:20px"
+                            type="checkbox"
+                            value = {{$value}}
+                            id="ch{{$id}}"
+                            class="{{$item->name}}">
+
+                           <label for="ch{{$id}}">{{$value}}</label>
+                        </li>
+                      @endforeach
+                    </ul>
+                  </div>
+                </div>
+           </details>
+            
+          @endforeach
 
           <input type="button" id = "filter_btn" name = "filter" value="Filter" style="margin-top:10px"/>
         </div>
@@ -313,13 +352,27 @@
 </div>
 </div>
 
+</div>
+</div>
+
 <script>
   $("#filter_btn").on("click",function(){
+    let settings_array = {}; 
+    for (let element of $(".settings")) {
+      let arraychecks = [];
+      for(let checkbox of $(element).find("input[type=checkbox]"))
+      {
+        if(checkbox.checked)arraychecks.push($(checkbox).val());
+      }
+      settings_array[$(element).attr("id")] = arraychecks;
+      console.log(settings_array);  
+    }
     json = 
     {
       'api_token'    :  api_token,
       'price_start'  :  $("#amount_start").val(),
-      'price_end'    :  $("#amount_end").val()
+      'price_end'    :  $("#amount_end").val(),
+      'settings'     :  settings_array
     };
     showProducts(1);
   });
@@ -477,6 +530,7 @@
                               "overflow": "scroll",
                               "width":"300px",
                               "height":"100%"});
+            $("#curtains").css({"left":$('#filter').css("width")});
       
             $(".filter-menu").css({"font-size":"15px"})
             $('#sm_filter').on("click",function()

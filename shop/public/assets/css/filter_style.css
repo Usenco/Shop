@@ -266,6 +266,27 @@ ul{
       padding-bottom:120px !important;
     }
 
+    .settings h5
+    {
+      font-size  :  22px;
+      display    :  inline;
+    }
+    .settings
+    {
+      user-select: none; 
+      margin: 10px 0 10px 0;
+    }
+    .setting > input[type=checkbox]
+    {
+      height:18px;
+      width:18px;
+    }
+    .setting > label
+    {
+      margin:0;
+      font-size: 19px;
+    }
+
     @media(max-width:991px)
     {
       #left
@@ -279,5 +300,6 @@ ul{
         
       }
     }
+
     /*******/
     

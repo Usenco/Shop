@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Characteristic;
 use App\Product;
 use Illuminate\Http\Request;
 
@@ -27,14 +28,43 @@ class CategoryController extends Controller
     {
         if(isset($request->category))
         {
+            $products = Product::where("idCategory",$request->category);
             if(isset($request->price_start) && isset($request->price_end))
             {
-                return Product::where("idCategory",$request->category)
-                       ->where("price",">",$request->price_start)
-                       ->where("price","<",$request->price_end)->paginate(12);
+                $products= $products
+                           ->where("price",">",$request->price_start)
+                           ->where("price","<",$request->price_end);
             }
-            return Product::where("idCategory",$request->category)->paginate(12);
+            if(isset($request->settings))
+            {
+                $have_set = false;
+                foreach($products->with("get_value")->get() as $tmp){
+                    
+                    if($tmp->get_value === null)continue;
+                    $have_set = false;
+                    foreach($request->settings as $id => $setting)
+                    {
+                       if(empty($setting))continue;
+                       foreach($tmp->get_value as $value){
+                          if($id == $value->id_characteristics)
+                          {
+                                foreach($setting as $one_set)
+                                {
+                                   if($one_set == $value->value){
+                                       $have_set = true;
+                                   }
+                                }
+                           }
+                        }
+                    }
+                    if($have_set == false){
+                        $products = $products->where("id","!=",$tmp->id );
+                    }
+                    
+                }
+            }
+            return $products->paginate(12);
         }
-        return "Hello";
+        return null;
     }
 }

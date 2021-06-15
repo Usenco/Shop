@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductRequest;
 use DateTime;
 use App\Product;
+use App\Category;
+use App\Value;
+use App\Category_characteristic;
 use App\Usersproductsfavorit;
 use Illuminate\Http\Request;
+use PhpParser\NodeVisitor\FirstFindingVisitor;
 
 class OurproductController extends Controller
 {
@@ -19,7 +23,11 @@ class OurproductController extends Controller
     {
         $category = $request->category;
         $api_token = auth()->user()->api_token;
-        return view("ourproduct",(parent::data_site()+compact('category','api_token')));
+
+        $characteristic =  Category::with(["get_characteristics"])->
+        where("id",$request->category)->first();
+        return view("ourproduct",(parent::data_site()
+               +compact('category','characteristic','api_token')));
     }
     public function oneproduct($id)
     {

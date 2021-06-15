@@ -13,4 +13,8 @@ class Product extends Model
     {
         return $this->hasMany(Productsimage::class,'idProduct','id');
     }
+    public function get_value()
+    {
+        return $this->hasMany(Value::class,"id","id");
+    }
 }

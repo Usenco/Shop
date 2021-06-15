@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateсlassicSuitsTable extends Migration
+class CreateTableCategoryCharacteristics extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateсlassicSuitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('сlassic_suits', function (Blueprint $table) {
+        Schema::create('category_characteristics', function (Blueprint $table) {
             $table->id();
-            $table->integer("idUp");
-            $table->integer("idBottom");
-            $table->timestamp('created_at')->nullable();
-            $table->timestamp('updated_at')->nullable();
+            $table->integer("idCategory");
+            $table->integer("idCharacteristic");
+            $table->timestamps();
         });
     }
 
@@ -29,6 +28,6 @@ class CreateсlassicSuitsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('сlassic_suits');
+        Schema::dropIfExists('category_characteristics');
     }
 }
